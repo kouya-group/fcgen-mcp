@@ -1,0 +1,200 @@
+{
+  "units": "mm",
+  "parts": [
+    {
+      "id": "base",
+      "template": "adapter_plate",
+      "params": {
+        "units": "mm",
+        "material_hint": "al5052",
+        "adapter_plate": {
+          "size": {
+            "length": 140.0,
+            "width": 140.0
+          },
+          "thickness": 6.0,
+          "corner_radius": 0.0,
+          "pattern_a": {
+            "count": 4,
+            "hole_diameter": 6.6,
+            "pcd": 90.0,
+            "angle_deg": 0.0
+          },
+          "pattern_b": {
+            "count": 6,
+            "hole_diameter": 5.5,
+            "pcd": 110.0,
+            "angle_deg": 15.0
+          }
+        },
+        "output": {
+          "step": true,
+          "stl": true,
+          "tolerance": 0.1
+        }
+      },
+      "placement": {
+        "position": [0, 0, 0],
+        "rotation": [0, 0, 0]
+      }
+    },
+    {
+      "id": "bracket_upper",
+      "template": "bracket",
+      "params": {
+        "units": "mm",
+        "material_hint": "al6061",
+        "bracket": {
+          "thickness": 3.0,
+          "leg_a": 71.0,
+          "leg_b": 60.0,
+          "width": 25.0,
+          "fillet": 1.0,
+          "chamfer": 0.5,
+          "holes": {
+            "pattern": "line",
+            "diameter": 5.5,
+            "count": 2,
+            "edge_offset": 8.0
+          }
+        },
+        "output": {
+          "step": true,
+          "stl": true,
+          "tolerance": 0.1
+        }
+      },
+      "placement": {
+        "position": [67.622, 17.417, 6.0],
+        "rotation": [135.0, 0, 0]
+      }
+    },
+    {
+      "id": "bracket_lower",
+      "template": "bracket",
+      "params": {
+        "units": "mm",
+        "material_hint": "al6061",
+        "bracket": {
+          "thickness": 3.0,
+          "leg_a": 71.0,
+          "leg_b": 60.0,
+          "width": 25.0,
+          "fillet": 1.0,
+          "chamfer": 0.5,
+          "holes": {
+            "pattern": "line",
+            "diameter": 5.5,
+            "count": 2,
+            "edge_offset": 8.0
+          }
+        },
+        "output": {
+          "step": true,
+          "stl": true,
+          "tolerance": 0.1
+        }
+      },
+      "placement": {
+        "position": [-67.622, -17.417, 6.0],
+        "rotation": [-45.0, 0, 0]
+      }
+    },
+    {
+      "id": "bolt_1",
+      "template": "bolt",
+      "params": {
+        "units": "mm",
+        "material_hint": "steel",
+        "bolt": {
+          "diameter": 5.0,
+          "length": 20.0,
+          "head_diameter": 8.0,
+          "head_height": 3.5
+        },
+        "output": {
+          "step": true,
+          "stl": true,
+          "tolerance": 0.1
+        }
+      },
+      "placement": {
+        "position": [53.1259, 14.2350, 9.0],
+        "rotation": [0, 0, 0]
+      }
+    },
+    {
+      "id": "bolt_2",
+      "template": "bolt",
+      "params": {
+        "units": "mm",
+        "material_hint": "steel",
+        "bolt": {
+          "diameter": 5.0,
+          "length": 20.0,
+          "head_diameter": 8.0,
+          "head_height": 3.5
+        },
+        "output": {
+          "step": true,
+          "stl": true,
+          "tolerance": 0.1
+        }
+      },
+      "placement": {
+        "position": [14.2350, 53.1259, 9.0],
+        "rotation": [0, 0, 0]
+      }
+    },
+    {
+      "id": "bolt_3",
+      "template": "bolt",
+      "params": {
+        "units": "mm",
+        "material_hint": "steel",
+        "bolt": {
+          "diameter": 5.0,
+          "length": 20.0,
+          "head_diameter": 8.0,
+          "head_height": 3.5
+        },
+        "output": {
+          "step": true,
+          "stl": true,
+          "tolerance": 0.1
+        }
+      },
+      "placement": {
+        "position": [-53.1259, -14.2350, 9.0],
+        "rotation": [0, 0, 0]
+      }
+    },
+    {
+      "id": "bolt_4",
+      "template": "bolt",
+      "params": {
+        "units": "mm",
+        "material_hint": "steel",
+        "bolt": {
+          "diameter": 5.0,
+          "length": 20.0,
+          "head_diameter": 8.0,
+          "head_height": 3.5
+        },
+        "output": {
+          "step": true,
+          "stl": true,
+          "tolerance": 0.1
+        }
+      },
+      "placement": {
+        "position": [-14.2350, -53.1259, 9.0],
+        "rotation": [0, 0, 0]
+      }
+    }
+  ],
+  "output": {
+    "step": true,
+    "stl": true
+  }
+}

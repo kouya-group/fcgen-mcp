@@ -1,0 +1,15 @@
+{
+  "units": "mm",
+  "material_hint": "steel",
+  "bolt": {
+    "diameter": 5.0,
+    "length": 20.0,
+    "head_diameter": 8.0,
+    "head_height": 3.5
+  },
+  "output": {
+    "step": true,
+    "stl": true,
+    "tolerance": 0.1
+  }
+}

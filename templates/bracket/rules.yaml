@@ -1,0 +1,3 @@
+min_wall_thickness_mm: 2.0
+min_hole_edge_distance_mm: 2.0
+max_aspect_ratio: 12.0

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["units", "bolt", "output"],
+  "properties": {
+    "units": { "type": "string", "const": "mm" },
+    "material_hint": { "type": "string" },
+    "bolt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["diameter", "length", "head_diameter", "head_height"],
+      "properties": {
+        "diameter": { "type": "number", "exclusiveMinimum": 0.0 },
+        "length": { "type": "number", "exclusiveMinimum": 0.0 },
+        "head_diameter": { "type": "number", "exclusiveMinimum": 0.0 },
+        "head_height": { "type": "number", "exclusiveMinimum": 0.0 }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step", "stl"],
+      "properties": {
+        "step": { "type": "boolean" },
+        "stl": { "type": "boolean" },
+        "tolerance": { "type": "number", "exclusiveMinimum": 0.0 }
+      }
+    }
+  }
+}

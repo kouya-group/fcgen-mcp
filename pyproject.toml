@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fcgen"
+version = "0.1.0"
+description = "Schema-driven parametric part generator for FreeCAD headless workflows"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = [
+    "jsonschema>=4.0",
+]
+
+[project.optional-dependencies]
+mcp = ["mcp>=1.0"]
+yaml = ["pyyaml>=6.0"]
+
+[project.scripts]
+fcgen = "fcgen.cli.main:main"
+fcgen-mcp = "fcgen.mcp.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

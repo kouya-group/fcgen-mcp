@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["units", "bracket", "output"],
+  "properties": {
+    "units": { "type": "string", "const": "mm" },
+    "material_hint": { "type": "string" },
+    "bracket": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["thickness", "leg_a", "leg_b", "width", "holes"],
+      "properties": {
+        "thickness": { "type": "number", "exclusiveMinimum": 0.0 },
+        "leg_a": { "type": "number", "exclusiveMinimum": 0.0 },
+        "leg_b": { "type": "number", "exclusiveMinimum": 0.0 },
+        "width": { "type": "number", "exclusiveMinimum": 0.0 },
+        "fillet": { "type": "number", "minimum": 0.0 },
+        "chamfer": { "type": "number", "minimum": 0.0 },
+        "holes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["pattern", "diameter", "count", "edge_offset"],
+          "properties": {
+            "pattern": { "type": "string", "enum": ["line", "grid"] },
+            "diameter": { "type": "number", "exclusiveMinimum": 0.0 },
+            "count": { "type": "integer", "minimum": 0 },
+            "edge_offset": { "type": "number", "minimum": 0.0 }
+          }
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step", "stl"],
+      "properties": {
+        "step": { "type": "boolean" },
+        "stl": { "type": "boolean" },
+        "tolerance": { "type": "number", "exclusiveMinimum": 0.0 }
+      }
+    }
+  }
+}

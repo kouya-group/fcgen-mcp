@@ -1,0 +1,25 @@
+{
+  "units": "mm",
+  "material_hint": "petg",
+  "enclosure": {
+    "size": {
+      "length": 120.0,
+      "width": 80.0,
+      "height": 40.0
+    },
+    "wall_thickness": 2.5,
+    "lid_thickness": 2.0,
+    "corner_radius": 0.0,
+    "screws": {
+      "count": 4,
+      "hole_diameter": 3.2,
+      "boss_diameter": 8.0,
+      "edge_offset": 10.0
+    }
+  },
+  "output": {
+    "step": true,
+    "stl": true,
+    "tolerance": 0.1
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "units": "mm",
+  "material_hint": "al6061",
+  "bracket": {
+    "thickness": 3.0,
+    "leg_a": 40.0,
+    "leg_b": 60.0,
+    "width": 25.0,
+    "fillet": 1.0,
+    "chamfer": 0.5,
+    "holes": {
+      "pattern": "line",
+      "diameter": 5.5,
+      "count": 2,
+      "edge_offset": 8.0
+    }
+  },
+  "output": {
+    "step": true,
+    "stl": true,
+    "tolerance": 0.1
+  }
+}

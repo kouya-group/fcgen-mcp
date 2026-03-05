@@ -1,0 +1,4 @@
+variant_id,bracket.leg_a,bracket.width,bracket.holes.count,bracket.holes.edge_offset
+small_light,32,22,2,6
+base_like,40,25,2,8
+wide_dense,55,35,4,9

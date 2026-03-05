@@ -1,0 +1,27 @@
+output/
+dist*/
+__pycache__/
+*.pyc
+*.egg-info/
+*.log
+FreeCAD/
+freecad_try/
+tmp_check/
+_freecad_*.cfg
+_fcgen_params.json
+.pytest_cache/
+
+# Environment / IDE
+.env
+.env.*
+.vscode/
+.idea/
+venv/
+.venv/
+
+# Security
+*.pem
+*.key
+
+# Claude Code
+.claude/

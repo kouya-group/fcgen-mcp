@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "templates": {
+    "adapter_plate": {
+      "status": "verified",
+      "source": "builtin",
+      "content_hash": "b7b55adf69b1ea3a1caea4b1fb254bd0388039608a039a57072a221033e2ec4b",
+      "param_count": 12,
+      "purpose": "Flat plate with two bolt circle patterns",
+      "tags": [
+        "structural",
+        "mounting",
+        "plate"
+      ],
+      "added_at": "2026-03-01T23:30:22.754341+00:00",
+      "verified_at": "2026-03-01T23:30:22.754341+00:00"
+    },
+    "bracket": {
+      "status": "verified",
+      "source": "builtin",
+      "content_hash": "121be0dcfaebdd52dcad884b8c9b361d1fbe1cf8ee3ddfe20cb03e8f733995ac",
+      "param_count": 10,
+      "purpose": "L-bracket with configurable holes",
+      "tags": [
+        "structural",
+        "mounting"
+      ],
+      "added_at": "2026-03-01T23:30:22.754341+00:00",
+      "verified_at": "2026-03-01T23:30:22.754341+00:00"
+    },
+    "enclosure": {
+      "status": "verified",
+      "source": "builtin",
+      "content_hash": "300a6c26c5199d5e3941a69f0bc5c2f05e8439d33c118897dfc4a4f842898a20",
+      "param_count": 10,
+      "purpose": "Rectangular box with lid and screw bosses",
+      "tags": [
+        "housing",
+        "electronics"
+      ],
+      "added_at": "2026-03-01T23:30:22.754341+00:00",
+      "verified_at": "2026-03-01T23:30:22.754341+00:00"
+    },
+    "bolt": {
+      "status": "verified",
+      "source": "generated",
+      "content_hash": "6e892b3c795264bded9214ad7cb17f46e423b46302007cb08ddcbf6f2e4464ba",
+      "param_count": 4,
+      "purpose": "Simple cylindrical bolt with head",
+      "tags": [
+        "fastener",
+        "bolt"
+      ],
+      "added_at": "2026-03-05T05:41:46.588385+00:00",
+      "verified_at": "2026-03-05T05:41:50.085304+00:00"
+    }
+  }
+}

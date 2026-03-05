@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["units", "adapter_plate", "output"],
+  "properties": {
+    "units": { "type": "string", "const": "mm" },
+    "material_hint": { "type": "string" },
+    "adapter_plate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["size", "thickness", "pattern_a", "pattern_b"],
+      "properties": {
+        "size": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["length", "width"],
+          "properties": {
+            "length": { "type": "number", "exclusiveMinimum": 0.0 },
+            "width": { "type": "number", "exclusiveMinimum": 0.0 }
+          }
+        },
+        "thickness": { "type": "number", "exclusiveMinimum": 0.0 },
+        "corner_radius": { "type": "number", "minimum": 0.0 },
+        "pattern_a": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["count", "hole_diameter", "pcd"],
+          "properties": {
+            "count": { "type": "integer", "minimum": 0 },
+            "hole_diameter": { "type": "number", "exclusiveMinimum": 0.0 },
+            "pcd": { "type": "number", "minimum": 0.0 },
+            "angle_deg": { "type": "number" }
+          }
+        },
+        "pattern_b": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["count", "hole_diameter", "pcd"],
+          "properties": {
+            "count": { "type": "integer", "minimum": 0 },
+            "hole_diameter": { "type": "number", "exclusiveMinimum": 0.0 },
+            "pcd": { "type": "number", "minimum": 0.0 },
+            "angle_deg": { "type": "number" }
+          }
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step", "stl"],
+      "properties": {
+        "step": { "type": "boolean" },
+        "stl": { "type": "boolean" },
+        "tolerance": { "type": "number", "exclusiveMinimum": 0.0 }
+      }
+    }
+  }
+}

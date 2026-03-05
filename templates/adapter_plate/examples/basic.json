@@ -1,0 +1,29 @@
+{
+  "units": "mm",
+  "material_hint": "al5052",
+  "adapter_plate": {
+    "size": {
+      "length": 140.0,
+      "width": 140.0
+    },
+    "thickness": 6.0,
+    "corner_radius": 0.0,
+    "pattern_a": {
+      "count": 4,
+      "hole_diameter": 6.6,
+      "pcd": 90.0,
+      "angle_deg": 0.0
+    },
+    "pattern_b": {
+      "count": 6,
+      "hole_diameter": 5.5,
+      "pcd": 110.0,
+      "angle_deg": 15.0
+    }
+  },
+  "output": {
+    "step": true,
+    "stl": true,
+    "tolerance": 0.1
+  }
+}
