@@ -71,7 +71,14 @@ def run_template(template: str, params: dict, out_dir: Path, dry_run: bool = Fal
     else:
         log_lines.append("generation=skipped")
 
+    # FreeCAD バージョン情報を取得
+    from fcgen.core.freecadcmd import get_freecad_version
+    fc_version = get_freecad_version()
+    fc_version_str = fc_version["full"] if fc_version else "unknown"
+    log_lines.append(f"freecad_version={fc_version_str}")
+
     report = build_report(template=template, params=params, artifact_hash=artifact_hash, generated=not dry_run)
+    report["freecad_version"] = fc_version_str
     report_json = out_dir / "report.json"
     report_md = out_dir / "report.md"
     report_json.write_text(json.dumps(report, indent=2), encoding="utf-8")
@@ -81,6 +88,7 @@ def run_template(template: str, params: dict, out_dir: Path, dry_run: bool = Fal
     return {
         "template": template,
         "artifact_hash": artifact_hash,
+        "freecad_version": fc_version_str,
         "outputs": {
             "step": str(step_path),
             "stl": str(stl_path),

@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-mcp = ["mcp>=1.0"]
+mcp = ["mcp>=1.24.0,<2.0"]
 yaml = ["pyyaml>=6.0"]
 
 [project.scripts]
@@ -22,6 +22,11 @@ fcgen-mcp = "fcgen.mcp.server:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.fcgen]
+freecad_min_version = "0.19"
+freecad_recommended_version = "1.0"
+freecad_tested_versions = ["0.21", "1.0"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

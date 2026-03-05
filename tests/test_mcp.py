@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from fcgen.mcp.server import (
+    check_freecad,
     list_templates,
     get_template_schema,
     get_template_example,
@@ -13,6 +14,17 @@ from fcgen.mcp.server import (
     list_candidates,
     find_template,
 )
+
+
+class TestCheckFreecad:
+    def test_returns_available_key(self):
+        result = check_freecad()
+        assert "available" in result
+        assert "path" in result
+
+    def test_returns_version_key(self):
+        result = check_freecad()
+        assert "version" in result
 
 
 class TestListTemplates:

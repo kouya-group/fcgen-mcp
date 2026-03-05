@@ -1,4 +1,4 @@
-"""fcgen MCP server — LLM が検証済み標準形状を安全に生成・合成するためのツール群。"""
+"""fcgen MCP server — Tools for safely generating and assembling verified parametric CAD parts via LLM."""
 import json
 from pathlib import Path
 
@@ -22,8 +22,15 @@ def _get_registry():
 
 
 @mcp.tool()
+def check_freecad() -> dict:
+    """Check if FreeCAD is available and return version information. Use this to verify the environment before attempting part generation."""
+    from fcgen.core.freecadcmd import check_freecad_available
+    return check_freecad_available()
+
+
+@mcp.tool()
 def list_templates() -> dict:
-    """利用可能なテンプレート一覧を返す。各テンプレートのスキーマ概要を含む。"""
+    """List all available verified templates. Returns each template's purpose, tags, parameter count, top-level schema keys, and whether an example is available."""
     reg = _get_registry()
     entries = reg.list_templates(status="verified")
     result = {}
@@ -46,7 +53,7 @@ def list_templates() -> dict:
 
 @mcp.tool()
 def get_template_schema(template: str) -> dict:
-    """指定テンプレートの完全なJSONスキーマを返す。"""
+    """Return the full JSON Schema for a given template. Use this to inspect all available parameters, types, defaults, and constraints before generating a part."""
     reg = _get_registry()
     schema_path = reg.resolve_path(template) / "schema.json"
     if not schema_path.exists():
@@ -56,7 +63,7 @@ def get_template_schema(template: str) -> dict:
 
 @mcp.tool()
 def get_template_example(template: str) -> dict:
-    """指定テンプレートのサンプルパラメータJSONを返す。"""
+    """Return an example parameter JSON for a given template. Use this as a starting point to understand the expected input format and typical values."""
     reg = _get_registry()
     example_path = reg.resolve_path(template) / "examples" / "basic.json"
     if not example_path.exists():
@@ -66,7 +73,7 @@ def get_template_example(template: str) -> dict:
 
 @mcp.tool()
 def validate_params(template: str, params: dict) -> dict:
-    """パラメータをスキーマ＋意味検証する。生成は行わない。安全確認用。"""
+    """Validate parameters against the template's JSON Schema and semantic rules without generating any output. Use this as a dry-run safety check before calling generate_part."""
     try:
         reg = _get_registry()
         schema_path = reg.resolve_path(template) / "schema.json"
@@ -82,7 +89,7 @@ def validate_params(template: str, params: dict) -> dict:
 
 @mcp.tool()
 def list_candidates() -> dict:
-    """候補（未検証）テンプレート一覧を返す。"""
+    """List all candidate (unverified) templates. These templates have been proposed but not yet passed verification."""
     try:
         reg = _get_registry()
         entries = reg.list_templates(status="candidate")
@@ -93,7 +100,7 @@ def list_candidates() -> dict:
 
 @mcp.tool()
 def propose_template(name: str, purpose: str, tags: list[str] | None = None, source: str = "generated") -> dict:
-    """新しいテンプレートを候補として登録する。templates_candidate/{name}/ にファイルが必要。"""
+    """Register a new template as a candidate. The template files (generate.py, schema.json, etc.) must already exist under templates_candidate/{name}/. Provide a purpose description and optional tags."""
     try:
         reg = _get_registry()
         entry = reg.add_candidate(name=name, source=source, purpose=purpose, tags=tags)
@@ -104,7 +111,7 @@ def propose_template(name: str, purpose: str, tags: list[str] | None = None, sou
 
 @mcp.tool()
 def verify_template(name: str) -> dict:
-    """候補テンプレートを検証し、合格なら verified に昇格する。"""
+    """Run verification checks on a candidate template. If all checks pass, promote it to verified status so it becomes available for part generation."""
     try:
         reg = _get_registry()
         entry = reg.verify(name)
@@ -115,7 +122,7 @@ def verify_template(name: str) -> dict:
 
 @mcp.tool()
 def find_template(purpose: str) -> dict:
-    """目的に合うテンプレートを検索。シンプルな方を優先。"""
+    """Search for templates matching a given purpose description. Returns results ranked by simplicity, preferring templates with fewer parameters."""
     try:
         reg = _get_registry()
         results = reg.find_simpler(purpose)
@@ -126,7 +133,7 @@ def find_template(purpose: str) -> dict:
 
 @mcp.tool()
 def generate_part(template: str, params: dict, out_name: str = "") -> dict:
-    """単一パーツを生成する。out_name で出力サブフォルダ名を指定可能。"""
+    """Generate a single CAD part from a verified template and parameters. Optionally specify out_name to set the output subfolder name; defaults to the template name."""
     name = out_name.strip() or template
     out_dir = OUTPUT_DIR / name
     try:
@@ -138,7 +145,7 @@ def generate_part(template: str, params: dict, out_name: str = "") -> dict:
 
 @mcp.tool()
 def generate_assembly(spec: dict, out_name: str = "assembly") -> dict:
-    """複数パーツのアセンブリを生成する。spec は parts 配列と placement を含む。"""
+    """Generate a multi-part assembly. The spec dict must contain a 'parts' array defining each part's template and parameters, and a 'placement' section describing how parts are positioned relative to each other."""
     out_dir = OUTPUT_DIR / out_name.strip()
     try:
         result = run_assembly(spec=spec, out_dir=out_dir, dry_run=False)
