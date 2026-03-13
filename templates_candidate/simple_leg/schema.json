@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["units", "simple_leg", "output"],
+  "properties": {
+    "units": { "type": "string", "const": "mm" },
+    "material_hint": { "type": "string" },
+    "simple_leg": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "depth", "height"],
+      "properties": {
+        "width": { "type": "number", "exclusiveMinimum": 0.0, "description": "脚の幅（X方向）" },
+        "depth": { "type": "number", "exclusiveMinimum": 0.0, "description": "脚の奥行（Y方向）" },
+        "height": { "type": "number", "exclusiveMinimum": 0.0, "description": "脚の高さ（Z方向）" },
+        "chamfer": { "type": "number", "minimum": 0.0, "description": "底面の面取り" },
+        "hole_diameter": { "type": "number", "minimum": 0.0, "description": "天板固定用の穴径（0で穴なし）" }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step", "stl"],
+      "properties": {
+        "step": { "type": "boolean" },
+        "stl": { "type": "boolean" },
+        "tolerance": { "type": "number", "exclusiveMinimum": 0.0 }
+      }
+    }
+  }
+}

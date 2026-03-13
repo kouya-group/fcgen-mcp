@@ -1,0 +1,16 @@
+{
+  "units": "mm",
+  "material_hint": "wood",
+  "simple_leg": {
+    "width": 60.0,
+    "depth": 60.0,
+    "height": 700.0,
+    "chamfer": 2.0,
+    "hole_diameter": 8.0
+  },
+  "output": {
+    "step": true,
+    "stl": true,
+    "tolerance": 0.1
+  }
+}

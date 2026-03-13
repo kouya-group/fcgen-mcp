@@ -1,0 +1,15 @@
+{
+  "units": "mm",
+  "material_hint": "plywood",
+  "table_top": {
+    "width": 1200.0,
+    "depth": 600.0,
+    "thickness": 25.0,
+    "edge_fillet": 3.0
+  },
+  "output": {
+    "step": true,
+    "stl": true,
+    "tolerance": 0.1
+  }
+}

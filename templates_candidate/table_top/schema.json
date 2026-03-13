@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["units", "table_top", "output"],
+  "properties": {
+    "units": { "type": "string", "const": "mm" },
+    "material_hint": { "type": "string" },
+    "table_top": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "depth", "thickness"],
+      "properties": {
+        "width": { "type": "number", "exclusiveMinimum": 0.0, "description": "天板の幅（X方向）" },
+        "depth": { "type": "number", "exclusiveMinimum": 0.0, "description": "天板の奥行（Y方向）" },
+        "thickness": { "type": "number", "exclusiveMinimum": 0.0, "description": "天板の厚み（Z方向）" },
+        "edge_fillet": { "type": "number", "minimum": 0.0, "description": "角のフィレット半径" }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step", "stl"],
+      "properties": {
+        "step": { "type": "boolean" },
+        "stl": { "type": "boolean" },
+        "tolerance": { "type": "number", "exclusiveMinimum": 0.0 }
+      }
+    }
+  }
+}

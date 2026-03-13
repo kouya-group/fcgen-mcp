@@ -1,0 +1,106 @@
+{
+  "description": "シンプルな4本脚デスク（幅1200mm x 奥行600mm x 高さ725mm）",
+  "units": "mm",
+  "parts": [
+    {
+      "id": "top",
+      "template": "table_top",
+      "params": {
+        "units": "mm",
+        "material_hint": "plywood",
+        "table_top": {
+          "width": 1200.0,
+          "depth": 600.0,
+          "thickness": 25.0,
+          "edge_fillet": 3.0
+        },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": {
+        "position": [0, 0, 700.0],
+        "rotation": [0, 0, 0]
+      }
+    },
+    {
+      "id": "leg_front_left",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "wood",
+        "simple_leg": {
+          "width": 60.0,
+          "depth": 60.0,
+          "height": 700.0,
+          "chamfer": 2.0,
+          "hole_diameter": 8.0
+        },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": {
+        "position": [30.0, 30.0, 0],
+        "rotation": [0, 0, 0]
+      }
+    },
+    {
+      "id": "leg_front_right",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "wood",
+        "simple_leg": {
+          "width": 60.0,
+          "depth": 60.0,
+          "height": 700.0,
+          "chamfer": 2.0,
+          "hole_diameter": 8.0
+        },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": {
+        "position": [1110.0, 30.0, 0],
+        "rotation": [0, 0, 0]
+      }
+    },
+    {
+      "id": "leg_rear_left",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "wood",
+        "simple_leg": {
+          "width": 60.0,
+          "depth": 60.0,
+          "height": 700.0,
+          "chamfer": 2.0,
+          "hole_diameter": 8.0
+        },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": {
+        "position": [30.0, 510.0, 0],
+        "rotation": [0, 0, 0]
+      }
+    },
+    {
+      "id": "leg_rear_right",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "wood",
+        "simple_leg": {
+          "width": 60.0,
+          "depth": 60.0,
+          "height": 700.0,
+          "chamfer": 2.0,
+          "hole_diameter": 8.0
+        },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": {
+        "position": [1110.0, 510.0, 0],
+        "rotation": [0, 0, 0]
+      }
+    }
+  ],
+  "output": { "step": true, "stl": true }
+}
