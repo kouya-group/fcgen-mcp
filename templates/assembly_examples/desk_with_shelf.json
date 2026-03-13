@@ -1,0 +1,73 @@
+{
+  "description": "棚板付きデスク（幅1200mm x 奥行600mm x 高さ725mm）— 天板の下に収納棚1枚",
+  "units": "mm",
+  "parts": [
+    {
+      "id": "top",
+      "template": "table_top",
+      "params": {
+        "units": "mm",
+        "material_hint": "plywood",
+        "table_top": { "width": 1200.0, "depth": 600.0, "thickness": 25.0, "edge_fillet": 3.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [0, 0, 700.0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "shelf",
+      "template": "table_top",
+      "params": {
+        "units": "mm",
+        "material_hint": "plywood",
+        "table_top": { "width": 1080.0, "depth": 480.0, "thickness": 18.0, "edge_fillet": 1.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [60.0, 60.0, 250.0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_fl",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "wood",
+        "simple_leg": { "width": 60.0, "depth": 60.0, "height": 700.0, "chamfer": 2.0, "hole_diameter": 8.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [30.0, 30.0, 0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_fr",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "wood",
+        "simple_leg": { "width": 60.0, "depth": 60.0, "height": 700.0, "chamfer": 2.0, "hole_diameter": 8.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [1110.0, 30.0, 0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_rl",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "wood",
+        "simple_leg": { "width": 60.0, "depth": 60.0, "height": 700.0, "chamfer": 2.0, "hole_diameter": 8.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [30.0, 510.0, 0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_rr",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "wood",
+        "simple_leg": { "width": 60.0, "depth": 60.0, "height": 700.0, "chamfer": 2.0, "hole_diameter": 8.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [1110.0, 510.0, 0], "rotation": [0, 0, 0] }
+    }
+  ],
+  "output": { "step": true, "stl": true }
+}

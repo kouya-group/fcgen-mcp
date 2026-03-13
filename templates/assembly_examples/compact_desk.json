@@ -1,0 +1,62 @@
+{
+  "description": "コンパクトデスク（幅800mm x 奥行500mm x 高さ700mm）— 小部屋・ワンルーム向け",
+  "units": "mm",
+  "parts": [
+    {
+      "id": "top",
+      "template": "table_top",
+      "params": {
+        "units": "mm",
+        "material_hint": "mdf",
+        "table_top": { "width": 800.0, "depth": 500.0, "thickness": 20.0, "edge_fillet": 2.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [0, 0, 680.0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_fl",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "steel",
+        "simple_leg": { "width": 40.0, "depth": 40.0, "height": 680.0, "chamfer": 1.0, "hole_diameter": 6.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [20.0, 20.0, 0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_fr",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "steel",
+        "simple_leg": { "width": 40.0, "depth": 40.0, "height": 680.0, "chamfer": 1.0, "hole_diameter": 6.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [740.0, 20.0, 0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_rl",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "steel",
+        "simple_leg": { "width": 40.0, "depth": 40.0, "height": 680.0, "chamfer": 1.0, "hole_diameter": 6.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [20.0, 440.0, 0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_rr",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "steel",
+        "simple_leg": { "width": 40.0, "depth": 40.0, "height": 680.0, "chamfer": 1.0, "hole_diameter": 6.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [740.0, 440.0, 0], "rotation": [0, 0, 0] }
+    }
+  ],
+  "output": { "step": true, "stl": true }
+}

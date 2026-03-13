@@ -1,0 +1,62 @@
+{
+  "description": "スタンディングデスク（幅1400mm x 奥行700mm x 高さ1050mm）— 立ち作業用",
+  "units": "mm",
+  "parts": [
+    {
+      "id": "top",
+      "template": "table_top",
+      "params": {
+        "units": "mm",
+        "material_hint": "bamboo",
+        "table_top": { "width": 1400.0, "depth": 700.0, "thickness": 30.0, "edge_fillet": 5.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [0, 0, 1020.0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_fl",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "steel",
+        "simple_leg": { "width": 70.0, "depth": 70.0, "height": 1020.0, "chamfer": 3.0, "hole_diameter": 10.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [35.0, 35.0, 0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_fr",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "steel",
+        "simple_leg": { "width": 70.0, "depth": 70.0, "height": 1020.0, "chamfer": 3.0, "hole_diameter": 10.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [1295.0, 35.0, 0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_rl",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "steel",
+        "simple_leg": { "width": 70.0, "depth": 70.0, "height": 1020.0, "chamfer": 3.0, "hole_diameter": 10.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [35.0, 595.0, 0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_rr",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "steel",
+        "simple_leg": { "width": 70.0, "depth": 70.0, "height": 1020.0, "chamfer": 3.0, "hole_diameter": 10.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [1295.0, 595.0, 0], "rotation": [0, 0, 0] }
+    }
+  ],
+  "output": { "step": true, "stl": true }
+}
