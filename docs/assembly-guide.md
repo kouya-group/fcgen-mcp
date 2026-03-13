@@ -137,6 +137,117 @@ All angles are in degrees. A rotation of `[0, 0, 0]` means no rotation
 
 ---
 
+## Real Example: Simple Desk Assembly
+
+This assembly creates a basic desk using `table_top` and `simple_leg` templates:
+one flat top plate and four rectangular legs.
+
+### Assembly JSON
+
+```json
+{
+  "units": "mm",
+  "parts": [
+    {
+      "id": "top",
+      "template": "table_top",
+      "params": {
+        "units": "mm",
+        "material_hint": "plywood",
+        "table_top": { "width": 1200.0, "depth": 600.0, "thickness": 25.0, "edge_fillet": 3.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [0, 0, 700.0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_front_left",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "wood",
+        "simple_leg": { "width": 60.0, "depth": 60.0, "height": 700.0, "chamfer": 2.0, "hole_diameter": 8.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [30.0, 30.0, 0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_front_right",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "wood",
+        "simple_leg": { "width": 60.0, "depth": 60.0, "height": 700.0, "chamfer": 2.0, "hole_diameter": 8.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [1110.0, 30.0, 0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_rear_left",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "wood",
+        "simple_leg": { "width": 60.0, "depth": 60.0, "height": 700.0, "chamfer": 2.0, "hole_diameter": 8.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [30.0, 510.0, 0], "rotation": [0, 0, 0] }
+    },
+    {
+      "id": "leg_rear_right",
+      "template": "simple_leg",
+      "params": {
+        "units": "mm",
+        "material_hint": "wood",
+        "simple_leg": { "width": 60.0, "depth": 60.0, "height": 700.0, "chamfer": 2.0, "hole_diameter": 8.0 },
+        "output": { "step": true, "stl": true, "tolerance": 0.1 }
+      },
+      "placement": { "position": [1110.0, 510.0, 0], "rotation": [0, 0, 0] }
+    }
+  ],
+  "output": { "step": true, "stl": true }
+}
+```
+
+### Part Layout
+
+```
+        ┌──────────────────────┐  ← table_top (1200x600x25mm, Z=700)
+        │                      │
+   ┌──┐ │                      │ ┌──┐
+   │  │ │                      │ │  │
+   │  │ │                      │ │  │  ← simple_leg x4 (60x60x700mm)
+   │  │ │                      │ │  │
+   └──┘ └──────────────────────┘ └──┘
+```
+
+| Part ID          | Template    | Position (mm)          | Description       |
+|------------------|-------------|------------------------|-------------------|
+| `top`            | table_top   | `[0, 0, 700]`         | Desk surface      |
+| `leg_front_left` | simple_leg  | `[30, 30, 0]`         | Front-left leg    |
+| `leg_front_right`| simple_leg  | `[1110, 30, 0]`       | Front-right leg   |
+| `leg_rear_left`  | simple_leg  | `[30, 510, 0]`        | Rear-left leg     |
+| `leg_rear_right` | simple_leg  | `[1110, 510, 0]`      | Rear-right leg    |
+
+### Design Notes
+
+- The **table top** is placed at Z=700mm (the height of the legs).
+- The **legs** are inset 30mm from the edges of the table top.
+- Legs have an 8mm mounting hole and 2mm chamfer on the bottom edges.
+- Total desk height: 700mm (legs) + 25mm (top thickness) = 725mm.
+
+### Desk Variations
+
+See `templates/assembly_examples/` for more desk configurations:
+
+| File                | Description                            | Dimensions            |
+|---------------------|----------------------------------------|-----------------------|
+| `simple_desk.json`  | Standard 4-leg desk                    | 1200 x 600 x 725mm   |
+| `compact_desk.json` | Compact desk for small rooms           | 800 x 500 x 700mm    |
+| `standing_desk.json`| Standing desk for stand-up work        | 1400 x 700 x 1050mm  |
+| `desk_with_shelf.json` | Desk with under-shelf for storage  | 1200 x 600 x 725mm   |
+
+---
+
 ## Real Example: plate_brackets_bolts Assembly
 
 This assembly combines 7 parts: one adapter plate base, two L-brackets mounted

@@ -257,6 +257,8 @@ LLMs can only generate parts from **verified** templates.
 | `adapter_plate` | Flat plate with two bolt circle patterns (PCD) | 12 |
 | `enclosure` | Rectangular box with lid and screw bosses | 10 |
 | `bolt` | Simple cylindrical bolt with head | 4 |
+| `table_top` | Flat table top plate with optional edge fillet | 4 |
+| `simple_leg` | Rectangular leg with chamfer and mounting hole | 5 |
 
 ## Creating Custom Templates
 
@@ -305,6 +307,28 @@ templates/                 # Verified templates (ready for generation)
 templates_candidate/       # Candidate templates (pending verification)
 tests/                     # Test suite
 ```
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Quick Start](docs/quickstart.md) | Build a desk in 5 minutes |
+| [MCP Tools Reference](docs/mcp-tools.md) | All 11 MCP tools with examples |
+| [Template Guide](docs/template-guide.md) | How to create custom templates |
+| [Assembly Guide](docs/assembly-guide.md) | Multi-part assembly creation |
+
+## Assembly Examples
+
+Pre-built assembly examples in `templates/assembly_examples/`:
+
+| File | Description |
+|------|-------------|
+| `simple_desk.json` | Standard 4-leg desk (1200 x 600 x 725mm) |
+| `compact_desk.json` | Compact desk for small rooms (800 x 500 x 700mm) |
+| `standing_desk.json` | Standing desk (1400 x 700 x 1050mm) |
+| `desk_with_shelf.json` | Desk with under-shelf storage |
+| `plate_brackets_bolts.json` | Bolted plate assembly with L-brackets |
+| `plate_with_brackets.json` | Plate with L-brackets |
 
 ## Development
 

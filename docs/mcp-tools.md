@@ -104,6 +104,20 @@ Each template info object:
       "param_count": 4,
       "top_level_keys": ["units", "material_hint", "bolt", "output"],
       "has_example": true
+    },
+    "table_top": {
+      "purpose": "Flat table top plate with optional edge fillet",
+      "tags": ["furniture", "table"],
+      "param_count": 4,
+      "top_level_keys": ["units", "material_hint", "table_top", "output"],
+      "has_example": true
+    },
+    "simple_leg": {
+      "purpose": "Rectangular leg with chamfer and mounting hole",
+      "tags": ["furniture", "leg"],
+      "param_count": 5,
+      "top_level_keys": ["units", "material_hint", "simple_leg", "output"],
+      "has_example": true
     }
   }
 }
