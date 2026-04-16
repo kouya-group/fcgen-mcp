@@ -53,6 +53,32 @@
       ],
       "added_at": "2026-03-05T05:41:46.588385+00:00",
       "verified_at": "2026-03-05T05:41:50.085304+00:00"
+    },
+    "table_top": {
+      "status": "verified",
+      "source": "builtin",
+      "content_hash": "b2cfef56ac3cbf62a3dd4a9280e830d4461a00c16506906796ad2c9d3d773465",
+      "param_count": 4,
+      "purpose": "Flat table top plate with optional edge fillet",
+      "tags": [
+        "furniture",
+        "table"
+      ],
+      "added_at": "2026-04-16T00:00:00+00:00",
+      "verified_at": "2026-04-16T00:00:00+00:00"
+    },
+    "simple_leg": {
+      "status": "verified",
+      "source": "builtin",
+      "content_hash": "8f5f6c3ee4b47e1c2ee2872144b53caf89963ea59b887ea1e8ebc0152abf286f",
+      "param_count": 5,
+      "purpose": "Rectangular leg with chamfer and mounting hole",
+      "tags": [
+        "furniture",
+        "leg"
+      ],
+      "added_at": "2026-04-16T00:00:00+00:00",
+      "verified_at": "2026-04-16T00:00:00+00:00"
     }
   }
 }
