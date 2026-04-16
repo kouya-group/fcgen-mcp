@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["units", "lego_brick", "output"],
+  "properties": {
+    "units": { "type": "string", "const": "mm" },
+    "material_hint": { "type": "string" },
+    "lego_brick": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["studs_x", "studs_y"],
+      "properties": {
+        "studs_x": { "type": "integer", "minimum": 1, "maximum": 16 },
+        "studs_y": { "type": "integer", "minimum": 1, "maximum": 16 },
+        "height_plates": { "type": "integer", "minimum": 1, "maximum": 10, "default": 3 }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step", "stl"],
+      "properties": {
+        "step": { "type": "boolean" },
+        "stl": { "type": "boolean" },
+        "tolerance": { "type": "number", "exclusiveMinimum": 0.0 }
+      }
+    }
+  }
+}

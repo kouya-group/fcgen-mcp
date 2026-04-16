@@ -1,0 +1,12 @@
+{
+  "units": "mm",
+  "material_hint": "rubber",
+  "sphere": {
+    "radius": 110.0
+  },
+  "output": {
+    "step": true,
+    "stl": true,
+    "tolerance": 0.1
+  }
+}

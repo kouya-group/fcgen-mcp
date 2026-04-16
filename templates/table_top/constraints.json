@@ -1,0 +1,3 @@
+{
+  "configurable": ["table_top.width", "table_top.depth", "table_top.thickness", "table_top.edge_fillet"]
+}

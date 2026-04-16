@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["units", "minecraft_block", "output"],
+  "properties": {
+    "units": { "type": "string", "const": "mm" },
+    "material_hint": { "type": "string" },
+    "minecraft_block": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["size"],
+      "properties": {
+        "size": { "type": "number", "exclusiveMinimum": 0.0 },
+        "edge_chamfer": { "type": "number", "minimum": 0.0 },
+        "groove_depth": { "type": "number", "minimum": 0.0 },
+        "groove_width": { "type": "number", "minimum": 0.0 }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step", "stl"],
+      "properties": {
+        "step": { "type": "boolean" },
+        "stl": { "type": "boolean" },
+        "tolerance": { "type": "number", "exclusiveMinimum": 0.0 }
+      }
+    }
+  }
+}

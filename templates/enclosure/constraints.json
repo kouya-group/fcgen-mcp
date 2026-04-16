@@ -1,0 +1,3 @@
+{
+  "configurable": ["enclosure.size.length", "enclosure.size.width", "enclosure.size.height", "enclosure.wall_thickness", "enclosure.lid_thickness", "enclosure.screws.count", "enclosure.screws.boss_diameter", "enclosure.screws.hole_diameter", "enclosure.screws.edge_offset", "enclosure.corner_radius"]
+}

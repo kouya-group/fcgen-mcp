@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "cup._style": {
+      "presets": {
+        "espresso": {
+          "value": { "cup.outer_diameter": 55, "cup.height": 55, "cup.wall_thickness": 3, "cup.bottom_thickness": 4, "cup.handle_width": 10, "cup.handle_height": 30, "cup.handle_thickness": 6 },
+          "label": "エスプレッソカップ (60ml)"
+        },
+        "coffee_mug": {
+          "value": { "cup.outer_diameter": 82, "cup.height": 95, "cup.wall_thickness": 4, "cup.bottom_thickness": 5, "cup.handle_width": 15, "cup.handle_height": 50, "cup.handle_thickness": 8 },
+          "label": "コーヒーマグ (250ml)"
+        },
+        "large_mug": {
+          "value": { "cup.outer_diameter": 90, "cup.height": 110, "cup.wall_thickness": 4, "cup.bottom_thickness": 5, "cup.handle_width": 18, "cup.handle_height": 60, "cup.handle_thickness": 9 },
+          "label": "ラージマグ (400ml)"
+        }
+      },
+      "default": "coffee_mug",
+      "source": "一般的な食器サイズ"
+    }
+  }
+}

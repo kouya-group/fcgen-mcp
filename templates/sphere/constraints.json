@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "sphere.radius": {
+      "presets": {
+        "soccer_size_3": { "value": 99.0, "label": "サッカー3号球 (子供用)" },
+        "soccer_size_4": { "value": 104.0, "label": "サッカー4号球 (小学生)" },
+        "soccer_size_5": { "value": 110.0, "label": "サッカー5号球 (一般/FIFA)" },
+        "tennis": { "value": 33.5, "label": "テニスボール" },
+        "baseball": { "value": 37.0, "label": "野球ボール (硬式)" },
+        "golf": { "value": 21.35, "label": "ゴルフボール" },
+        "basketball": { "value": 120.65, "label": "バスケットボール (7号)" },
+        "ping_pong": { "value": 20.0, "label": "卓球ボール" }
+      },
+      "default": "soccer_size_5",
+      "source": "各競技規格"
+    }
+  }
+}

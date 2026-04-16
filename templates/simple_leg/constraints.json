@@ -1,0 +1,3 @@
+{
+  "configurable": ["simple_leg.width", "simple_leg.depth", "simple_leg.height", "simple_leg.chamfer", "simple_leg.hole_diameter"]
+}

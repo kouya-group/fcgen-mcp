@@ -1,0 +1,18 @@
+{
+  "units": "mm",
+  "material_hint": "ceramic",
+  "cup": {
+    "outer_diameter": 82.0,
+    "height": 95.0,
+    "wall_thickness": 4.0,
+    "bottom_thickness": 5.0,
+    "handle_width": 15.0,
+    "handle_height": 50.0,
+    "handle_thickness": 8.0
+  },
+  "output": {
+    "step": true,
+    "stl": true,
+    "tolerance": 0.1
+  }
+}

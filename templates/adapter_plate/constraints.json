@@ -1,0 +1,3 @@
+{
+  "configurable": ["adapter_plate.size.length", "adapter_plate.size.width", "adapter_plate.thickness", "adapter_plate.corner_radius", "adapter_plate.pattern_a.count", "adapter_plate.pattern_a.hole_diameter", "adapter_plate.pattern_a.pcd", "adapter_plate.pattern_a.angle_deg", "adapter_plate.pattern_b.count", "adapter_plate.pattern_b.hole_diameter", "adapter_plate.pattern_b.pcd", "adapter_plate.pattern_b.angle_deg"]
+}

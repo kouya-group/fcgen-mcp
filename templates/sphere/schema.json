@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["units", "sphere", "output"],
+  "properties": {
+    "units": { "type": "string", "const": "mm" },
+    "material_hint": { "type": "string" },
+    "sphere": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["radius"],
+      "properties": {
+        "radius": { "type": "number", "exclusiveMinimum": 0.0 }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step", "stl"],
+      "properties": {
+        "step": { "type": "boolean" },
+        "stl": { "type": "boolean" },
+        "tolerance": { "type": "number", "exclusiveMinimum": 0.0 }
+      }
+    }
+  }
+}

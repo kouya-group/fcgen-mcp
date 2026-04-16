@@ -79,6 +79,59 @@
       ],
       "added_at": "2026-04-16T00:00:00+00:00",
       "verified_at": "2026-04-16T00:00:00+00:00"
+    },
+    "sphere": {
+      "status": "verified",
+      "source": "generated",
+      "content_hash": "e10581fd5b8a9087fb22f58244690d7ec52e7981720f8fb7d7c22056adeb8f49",
+      "param_count": 1,
+      "purpose": "Solid sphere with configurable radius",
+      "tags": [
+        "primitive",
+        "ball"
+      ],
+      "added_at": "2026-04-16T03:36:46.619342+00:00",
+      "verified_at": "2026-04-16T03:36:46.621160+00:00"
+    },
+    "cup": {
+      "status": "verified",
+      "source": "generated",
+      "content_hash": "29be0bb1fe7b7de30492690726545b25162d72d506ce81dec6d1f01df49dcc3b",
+      "param_count": 7,
+      "purpose": "Cylindrical cup with handle, hollow interior",
+      "tags": [
+        "tableware",
+        "container"
+      ],
+      "added_at": "2026-04-16T03:36:46.621315+00:00",
+      "verified_at": "2026-04-16T03:36:46.622858+00:00"
+    },
+    "lego_brick": {
+      "status": "verified",
+      "source": "generated",
+      "content_hash": "bb9f4cb6f9e1cc08af9be5b17ae25000b39743989e1cd6ddcbdc21bc1b7558c4",
+      "param_count": 3,
+      "purpose": "LEGO-compatible brick with studs",
+      "tags": [
+        "toy",
+        "building-block"
+      ],
+      "added_at": "2026-04-16T03:36:46.622983+00:00",
+      "verified_at": "2026-04-16T03:36:46.624270+00:00"
+    },
+    "minecraft_block": {
+      "status": "verified",
+      "source": "generated",
+      "content_hash": "f492d7ecf2e194a4b1fb81c2cd48b7fd633dcebee4cd1f502d29c2fc7a116a1d",
+      "param_count": 4,
+      "purpose": "Minecraft-style cube with edge chamfers and face grooves",
+      "tags": [
+        "toy",
+        "game",
+        "block"
+      ],
+      "added_at": "2026-04-16T03:39:16.713350+00:00",
+      "verified_at": "2026-04-16T03:39:16.715169+00:00"
     }
   }
 }

@@ -211,6 +211,199 @@ class Registry:
         results.sort(key=lambda x: x.get("param_count", 0))
         return results
 
+    # -- Constraints 付き検索 ------------------------------------------------
+
+    def _load_constraints(self, name: str) -> dict | None:
+        """テンプレートの constraints.json を読み込む。なければ None。"""
+        cpath = self.resolve_path(name) / "constraints.json"
+        if cpath.exists():
+            return json.loads(cpath.read_text(encoding="utf-8"))
+        return None
+
+    def _build_constraint_index(self, name: str, constraints: dict) -> str:
+        """constraints.json から検索用テキストを構築。"""
+        parts = []
+        # linked プリセット名
+        for _key, linked in constraints.get("linked", {}).items():
+            for preset_name in linked.get("presets", {}):
+                parts.append(preset_name.lower())
+        # variant プリセット名 + ラベル
+        for _key, variant in constraints.get("variants", {}).items():
+            for preset_name, info in variant.get("presets", {}).items():
+                parts.append(preset_name.lower())
+                if isinstance(info, dict) and "label" in info:
+                    parts.append(info["label"].lower())
+        # canonical の source
+        for _key, canon in constraints.get("canonical", {}).items():
+            if isinstance(canon, dict) and "source" in canon:
+                parts.append(canon["source"].lower())
+        return " ".join(parts)
+
+    def _resolve_preset(self, query_tokens: list[str], constraints: dict) -> dict | None:
+        """クエリトークンから linked/variant プリセットを解決する。"""
+        # linked プリセット検索
+        for _key, linked in constraints.get("linked", {}).items():
+            presets = linked.get("presets", {})
+            for preset_name, values in presets.items():
+                if preset_name.lower() in query_tokens:
+                    return {
+                        "type": "linked",
+                        "preset": preset_name,
+                        "source": linked.get("source", ""),
+                        "resolved_params": values,
+                        "free_params": linked.get("free_params", []),
+                    }
+        # variant プリセット検索
+        for param_key, variant in constraints.get("variants", {}).items():
+            presets = variant.get("presets", {})
+            for preset_name, info in presets.items():
+                # プリセット名またはラベルの部分一致
+                label = ""
+                if isinstance(info, dict):
+                    label = info.get("label", "").lower()
+                check_texts = [preset_name.lower(), label]
+                for tok in query_tokens:
+                    for ct in check_texts:
+                        if tok in ct:
+                            if isinstance(info, dict) and "value" in info:
+                                value = info["value"]
+                                if isinstance(value, dict):
+                                    resolved = value
+                                else:
+                                    resolved = {param_key: value}
+                            else:
+                                resolved = {param_key: info}
+                            return {
+                                "type": "variant",
+                                "preset": preset_name,
+                                "label": label,
+                                "source": variant.get("source", ""),
+                                "resolved_params": resolved,
+                            }
+        return None
+
+    # テンプレート名の多言語エイリアス（日本語、略称など）
+    _ALIASES: dict[str, list[str]] = {
+        "bolt": ["ボルト", "ねじ"],
+        "bracket": ["ブラケット", "l字金具"],
+        "adapter_plate": ["アダプタープレート", "プレート", "plate"],
+        "enclosure": ["エンクロージャー", "筐体", "ケース", "ボックス"],
+        "table_top": ["天板", "テーブルトップ", "テーブル"],
+        "simple_leg": ["脚", "レッグ"],
+        "sphere": ["球", "ボール", "サッカーボール", "テニスボール", "野球ボール", "バスケットボール", "ゴルフボール", "卓球ボール"],
+        "cup": ["カップ", "コップ", "マグカップ", "マグ", "コーヒーカップ", "コーヒーマグ", "エスプレッソ"],
+        "lego_brick": ["レゴ", "lego", "ブロック"],
+        "minecraft_block": ["マイクラブロック", "マイクラ", "マインクラフト", "minecraft"],
+    }
+
+    def find_with_constraints(self, purpose: str) -> list[dict]:
+        """constraints.json も含めて横断検索し、プリセット解決済み結果を返す。"""
+        import re
+        tokens = purpose.lower().split()
+        if not tokens:
+            return []
+
+        # トークン前処理: "2x4" → "2" "4", "20mm" → "20"
+        preprocessed = []
+        for tok in tokens:
+            # "2x4" パターン
+            m = re.match(r"^(\d+)x(\d+)$", tok, re.IGNORECASE)
+            if m:
+                preprocessed.extend([m.group(1), m.group(2)])
+                continue
+            preprocessed.append(tok)
+
+        # 数値トークンを抽出（"20mm" → 20.0）
+        numeric_values = []
+        text_tokens = []
+        for tok in preprocessed:
+            m = re.match(r"^(\d+(?:\.\d+)?)\s*(?:mm)?$", tok)
+            if m:
+                numeric_values.append(float(m.group(1)))
+            else:
+                text_tokens.append(tok)
+
+        # エイリアス展開: text_tokens にエイリアスが含まれていればテンプレート名に変換
+        # 「M5ボルト」のように結合されたトークンも部分一致で分解する
+        # 長いエイリアスを先にマッチさせる（「マイクラブロック」→「マイクラ」+「ブロック」ではなく一括マッチ）
+        all_aliases: list[tuple[str, str]] = []  # (alias_lower, tmpl_name)
+        for tmpl_name, aliases in self._ALIASES.items():
+            for alias in aliases:
+                all_aliases.append((alias.lower(), tmpl_name))
+        all_aliases.sort(key=lambda x: len(x[0]), reverse=True)  # 長い順
+
+        expanded_tokens = []
+        for tok in text_tokens:
+            matched_alias = False
+            for al, tmpl_name in all_aliases:
+                if tok == al:
+                    expanded_tokens.append(tmpl_name)
+                    matched_alias = True
+                    break
+                elif al in tok:
+                    remainder = tok.replace(al, "", 1).strip()
+                    expanded_tokens.append(tmpl_name)
+                    if remainder:
+                        # 残りも再帰的にエイリアス展開
+                        remainder_resolved = False
+                        for al2, tmpl2 in all_aliases:
+                            if remainder == al2:
+                                # 同じテンプレートなら冗長なので捨てる
+                                if tmpl2 != tmpl_name:
+                                    expanded_tokens.append(tmpl2)
+                                remainder_resolved = True
+                                break
+                        if not remainder_resolved:
+                            expanded_tokens.append(remainder)
+                    matched_alias = True
+                    break
+            if not matched_alias:
+                expanded_tokens.append(tok)
+        text_tokens = expanded_tokens
+
+        results = []
+        for name, entry in self._data.get("templates", {}).items():
+            if entry.get("status") != "verified":
+                continue
+
+            # 基本検索テキスト
+            searchable = " ".join([
+                name.lower(),
+                (entry.get("purpose") or "").lower(),
+                " ".join(t.lower() for t in entry.get("tags", [])),
+            ])
+
+            # constraints 検索テキスト追加
+            constraints = self._load_constraints(name)
+            if constraints:
+                searchable += " " + self._build_constraint_index(name, constraints)
+
+            # AND 検索（text_tokens のみ）
+            if not text_tokens or all(tok in searchable for tok in text_tokens):
+                result_entry = {"name": name, **entry}
+
+                # プリセット解決
+                if constraints:
+                    preset = self._resolve_preset(text_tokens, constraints)
+                    if preset:
+                        result_entry["matched_preset"] = preset
+                        # 数値をfree_paramsに割り当て
+                        if numeric_values and "free_params" in preset:
+                            assigned = {}
+                            for i, fp in enumerate(preset.get("free_params", [])):
+                                if i < len(numeric_values):
+                                    assigned[fp] = numeric_values[i]
+                            if assigned:
+                                preset["assigned_free_params"] = assigned
+
+                results.append(result_entry)
+
+        results.sort(key=lambda x: (
+            0 if "matched_preset" in x else 1,
+            x.get("param_count", 0),
+        ))
+        return results
+
     # -- 整合性チェック -------------------------------------------------------
 
     def check_integrity(self, name: str) -> bool:

@@ -1,0 +1,10 @@
+{
+  "canonical": {
+    "_constants.PITCH": { "value": 8.0, "source": "LEGO System standard", "allow_override": false },
+    "_constants.STUD_D": { "value": 4.8, "source": "LEGO System standard", "allow_override": false },
+    "_constants.STUD_H": { "value": 1.8, "source": "LEGO System standard", "allow_override": false },
+    "_constants.PLATE_H": { "value": 3.2, "source": "LEGO System standard", "allow_override": false },
+    "_constants.WALL": { "value": 1.6, "source": "LEGO System standard", "allow_override": false }
+  },
+  "configurable": ["lego_brick.studs_x", "lego_brick.studs_y", "lego_brick.height_plates"]
+}

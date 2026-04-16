@@ -1,6 +1,6 @@
 ---
 name: fcgen
-description: Generate parametric CAD parts and assemblies via the fcgen MCP server. Use when user asks to "create a CAD part", "generate a bracket", "build a desk", "make an assembly", "design a bolt", "3D model", "STEP file", "STL file", mentions template names like "bracket", "adapter_plate", "enclosure", "bolt", "table_top", "simple_leg", or asks about FreeCAD generation. Do NOT use for general 3D modeling questions unrelated to fcgen templates.
+description: Generate parametric CAD parts and assemblies via the fcgen MCP server. Use when user asks to "create a CAD part", "generate a bracket", "build a desk", "make an assembly", "design a bolt", "M5 bolt", "soccer ball", "LEGO brick", "Minecraft block", "3D model", "STEP file", "STL file", mentions template names like "bracket", "adapter_plate", "enclosure", "bolt", "table_top", "simple_leg", "sphere", "cup", "lego_brick", "minecraft_block", or asks about FreeCAD generation. Do NOT use for general 3D modeling questions unrelated to fcgen templates.
 ---
 
 # fcgen -- Parametric CAD Generation via MCP
@@ -9,8 +9,10 @@ Generate verified parametric CAD parts (STEP/STL) through the fcgen MCP server a
 
 ## Critical Rules
 
-- ALWAYS follow the 5-step workflow: discover, inspect, example, validate, generate
+- ALWAYS call `find_template` first to resolve constraints and presets
+- NEVER change canonical parameter values without explicit user confirmation
 - NEVER skip `validate_params` before `generate_part` or `generate_assembly`
+- If `validate_params` returns warnings, inform the user before proceeding
 - ALL dimensions are in millimeters (mm)
 - Each part `id` in an assembly MUST be unique
 - Only verified templates can be used for generation
@@ -20,9 +22,9 @@ Generate verified parametric CAD parts (STEP/STL) through the fcgen MCP server a
 This skill uses the project's docs/ as its single source of truth.
 Read these files for detailed reference:
 
-- `docs/mcp-tools.md` -- Full MCP tools reference (11 tools, parameters, return values, examples)
-- `docs/assembly-guide.md` -- Assembly spec format, placement rules, desk/bolted plate examples
-- `docs/template-guide.md` -- Custom template creation (schema.json, generator.py, FreeCAD script)
+- `docs/mcp-tools.md` -- Full MCP tools reference (parameters, return values, examples)
+- `docs/assembly-guide.md` -- Assembly spec format, placement rules, examples
+- `docs/template-guide.md` -- Custom template creation guide
 - `docs/quickstart.md` -- Quick start guide and available templates
 
 ## Available MCP Tools
@@ -33,40 +35,66 @@ Read these files for detailed reference:
 | `list_templates` | List all verified templates |
 | `get_template_schema` | Get full JSON Schema for a template |
 | `get_template_example` | Get working example parameters |
-| `validate_params` | Dry-run validation (schema + semantic) |
-| `find_template` | Search templates by purpose description |
+| `get_template_constraints` | Get canonical/variant/linked/configurable constraints |
+| `validate_params` | Dry-run validation with canonical deviation warnings |
+| `find_template` | Search by name, purpose, tags, or presets (e.g. "M5 bolt 20mm") |
 | `generate_part` | Generate single part (STEP/STL) |
-| `generate_assembly` | Generate multi-part assembly |
+| `generate_assembly` | Generate multi-part assembly with interference check |
 | `list_candidates` | List unverified candidate templates |
 | `propose_template` | Register new template as candidate |
 | `verify_template` | Verify and promote candidate to verified |
 
 ## Workflow: Generate a Single Part
 
-### Step 1: Discover templates
+### Step 1: Find template with constraints
 
-Call `list_templates` to see what is available.
+Call `find_template(purpose)` with the user's description. This searches templates, constraints, and presets. Example queries: "M5 bolt 20mm", "soccer ball", "LEGO 2x4".
 
-### Step 2: Inspect the schema
+If the result includes `matched_preset`, use the resolved parameters directly.
 
-Call `get_template_schema(template)` to understand parameters, types, and constraints.
+### Step 2: Check constraints
 
-### Step 3: Get an example
+If Step 1 did not resolve a preset, call `get_template_constraints(template)` to understand:
+- **canonical**: Fixed by specification. Do NOT change without user confirmation.
+- **linked**: One key determines others (e.g. "M5" sets diameter/head_d/head_h). Use presets.
+- **variant**: Pick from predefined options (e.g. soccer ball sizes).
+- **configurable**: Freely adjustable by the user.
 
-Call `get_template_example(template)` to get a working parameter set as a starting point.
+### Step 3: Build parameters
+
+- Start from `get_template_example` as a base
+- Apply resolved preset values (canonical/linked/variant)
+- Set configurable params from user's requirements
 
 ### Step 4: Validate
 
-Call `validate_params(template, params)` to dry-run check before generation.
-If validation fails, fix the error and re-validate.
+Call `validate_params(template, params)`.
+- If `valid: false`, fix the error and re-validate.
+- If `warnings` are present (canonical deviations), inform the user.
 
 ### Step 5: Generate
 
 Call `generate_part(template, params, out_name)` to produce STEP/STL files.
 
-## Workflow: Generate an Assembly
+## Parameter Constraints
 
-An assembly combines multiple parts with spatial placement.
+### 4 Constraint Types
+
+| Type | Meaning | Action |
+|------|---------|--------|
+| **canonical** | Fixed by specification | Do NOT change. Ask user if override needed. |
+| **linked** | One key determines others | Use preset. If no match, suggest closest. |
+| **variant** | Choose from options | Pick best fit for user's intent. |
+| **configurable** | Free to set | Adjust to user's requirements. |
+
+### Examples
+
+- "M5 bolt 20mm" → `linked:M5` resolves diameter=5, head_d=8, head_h=3.5. Only length=20 is free.
+- "Minecraft block" → `canonical:size=1000mm`. Do not set to 50mm.
+- "Soccer ball" → `variant:soccer_size_5` resolves radius=110mm.
+- "Table 800mm wide" → `configurable:width=800`. All params are free.
+
+## Workflow: Generate an Assembly
 
 ### Assembly Spec Format
 
@@ -97,14 +125,15 @@ An assembly combines multiple parts with spatial placement.
 ### Assembly Steps
 
 1. Plan the assembly: decide templates, parameters, and spatial layout
-2. Validate each part's params individually with `validate_params`
-3. Build the assembly spec JSON with unique `id` per part
-4. Call `generate_assembly(spec, out_name)`
-5. Check the `interference` field in the result for part collisions
+2. For each part: resolve constraints via `find_template` or `get_template_constraints`
+3. Validate each part's params individually with `validate_params`
+4. Build the assembly spec JSON with unique `id` per part
+5. Call `generate_assembly(spec, out_name)`
+6. Check the `interference` field in the result for part collisions
 
 ### Interference Check
 
-`generate_assembly` automatically checks all part pairs for physical overlap using FreeCAD Boolean intersection. The result includes:
+`generate_assembly` automatically checks all part pairs for physical overlap. The result includes:
 
 ```json
 {
@@ -119,22 +148,7 @@ An assembly combines multiple parts with spatial placement.
 ```
 
 - `pair_count > 0` means parts are colliding — fix placement before using the output
-- A detailed report is also saved as `interference_report.json` in the output directory
-- Volumes below 0.001 mm^3 are ignored as numerical noise
-
-### Desk Assembly Pattern
-
-A standard desk uses `table_top` + 4x `simple_leg`:
-
-- Table top at Z = leg_height (e.g. `[0, 0, 700]`)
-- Legs at floor level, inset from edges:
-  - Front-left: `[inset, inset, 0]`
-  - Front-right: `[top_width - leg_width - inset, inset, 0]`
-  - Rear-left: `[inset, top_depth - leg_depth - inset, 0]`
-  - Rear-right: `[top_width - leg_width - inset, top_depth - leg_depth - inset, 0]`
-- Total height = leg_height + top_thickness
-
-For full assembly examples including bolted plate patterns, read `docs/assembly-guide.md`.
+- A detailed report is saved as `interference_report.json` in the output directory
 
 ## Available Templates Quick Reference
 
@@ -143,11 +157,13 @@ For full assembly examples including bolted plate patterns, read `docs/assembly-
 | `bracket` | L-bracket with holes | thickness, leg_a, leg_b, width, holes |
 | `adapter_plate` | Flat plate with bolt circle patterns | size, thickness, pattern_a, pattern_b |
 | `enclosure` | Box with lid and screw bosses | width, depth, height, wall, corner_radius |
-| `bolt` | Cylindrical bolt with head | diameter, length, head_diameter, head_height |
+| `bolt` | Cylindrical bolt with head | diameter, length, head_d, head_h (linked: M3-M20) |
 | `table_top` | Flat plate with edge fillet | width, depth, thickness, edge_fillet |
 | `simple_leg` | Rectangular leg with chamfer | width, depth, height, chamfer, hole_diameter |
-
-For full parameter schemas and examples, call `get_template_schema` and `get_template_example`, or read `docs/quickstart.md`.
+| `sphere` | Solid sphere | radius (variants: soccer/tennis/baseball/golf/etc.) |
+| `cup` | Hollow cup with handle | outer_d, height, wall, bottom (variants: espresso/mug/large) |
+| `lego_brick` | LEGO-compatible brick | studs_x, studs_y, height_plates (canonical: pitch=8mm) |
+| `minecraft_block` | Minecraft-style cube | size (canonical: 1000mm), chamfer, grooves |
 
 ## Parameter Structure Convention
 
@@ -157,51 +173,26 @@ Every template follows this structure:
 {
   "units": "mm",
   "material_hint": "optional_material_string",
-  "TEMPLATE_NAME": {
-    "param1": value,
-    "param2": value
-  },
-  "output": {
-    "step": true,
-    "stl": true,
-    "tolerance": 0.1
-  }
+  "TEMPLATE_NAME": { "param1": value, "param2": value },
+  "output": { "step": true, "stl": true, "tolerance": 0.1 }
 }
 ```
 
-- `units` is always `"mm"`
-- `material_hint` is informational only (not used in geometry)
-- The template-specific section key matches the template name exactly
-- `output.tolerance` is optional (default varies by template)
-
 ## Creating Custom Templates
 
-### Step 1: Create template files
-
-Create these files under `templates_candidate/{name}/`:
+Create files under `templates_candidate/{name}/`:
 
 | File | Purpose |
 |------|---------|
 | `schema.json` | JSON Schema (Draft 2020-12) with parameter constraints |
+| `constraints.json` | Canonical/variant/linked/configurable definitions |
 | `generator.py` | Python entry point: calls FreeCAD subprocess |
 | `freecad_generate.py` | FreeCAD script: builds geometry using Part API |
 | `examples/basic.json` | Valid example parameter set |
 
-### Step 2: Register as candidate
+Then: `propose_template(name, purpose, tags)` → `verify_template(name)`.
 
-```
-propose_template(name, purpose, tags)
-```
-
-### Step 3: Verify and promote
-
-```
-verify_template(name)
-```
-
-On success, the template moves from `templates_candidate/` to `templates/` and becomes available for generation.
-
-For detailed template creation guide with code examples, read `docs/template-guide.md`.
+For detailed guide, read `docs/template-guide.md`.
 
 ## Common Issues
 
@@ -209,19 +200,16 @@ For detailed template creation guide with code examples, read `docs/template-gui
 The template is not verified. Check with `list_templates`. If it is a candidate, run `verify_template` first.
 
 ### Validation fails with schema error
-Parameters do not match the template's JSON Schema. Use `get_template_schema` to check required fields, types, and constraints. Common mistakes:
+Use `get_template_schema` to check required fields. Common mistakes:
 - Missing required fields (`units`, `output`, template section)
 - Wrong nesting level (params must be inside the template-named section)
 - Negative dimensions (all dimensions require `exclusiveMinimum: 0`)
 
+### Canonical deviation warning
+`validate_params` warns when a canonical value differs from specification. Inform the user and ask for confirmation before proceeding.
+
 ### FreeCAD not found
-Run `check_freecad` to diagnose. Set the `FCGEN_FREECADCMD` environment variable to the full path of `freecadcmd`.
+Run `check_freecad` to diagnose. Set `FCGEN_FREECADCMD` environment variable.
 
 ### Assembly part ID conflict
-Each part `id` must be unique. Use descriptive names like `bolt_1`, `bracket_upper`, `leg_front_left`.
-
-## Performance Notes
-
-- Take your time to validate before generating
-- Quality is more important than speed
-- Do not skip the validate_params step
+Each part `id` must be unique. Use descriptive names like `bolt_1`, `bracket_upper`.

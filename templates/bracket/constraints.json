@@ -1,0 +1,3 @@
+{
+  "configurable": ["bracket.thickness", "bracket.leg_a", "bracket.leg_b", "bracket.width", "bracket.fillet", "bracket.chamfer", "bracket.holes.pattern", "bracket.holes.diameter", "bracket.holes.count", "bracket.holes.edge_offset"]
+}

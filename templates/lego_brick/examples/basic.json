@@ -1,0 +1,14 @@
+{
+  "units": "mm",
+  "material_hint": "abs",
+  "lego_brick": {
+    "studs_x": 4,
+    "studs_y": 2,
+    "height_plates": 3
+  },
+  "output": {
+    "step": true,
+    "stl": true,
+    "tolerance": 0.1
+  }
+}

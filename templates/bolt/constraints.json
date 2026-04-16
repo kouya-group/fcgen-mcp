@@ -1,0 +1,20 @@
+{
+  "linked": {
+    "bolt._standard": {
+      "key_param": "bolt.diameter",
+      "source": "ISO 4017 hex head bolt",
+      "presets": {
+        "M3":  { "bolt.diameter": 3.0, "bolt.head_diameter": 5.5,  "bolt.head_height": 2.0 },
+        "M4":  { "bolt.diameter": 4.0, "bolt.head_diameter": 7.0,  "bolt.head_height": 2.8 },
+        "M5":  { "bolt.diameter": 5.0, "bolt.head_diameter": 8.0,  "bolt.head_height": 3.5 },
+        "M6":  { "bolt.diameter": 6.0, "bolt.head_diameter": 10.0, "bolt.head_height": 4.0 },
+        "M8":  { "bolt.diameter": 8.0, "bolt.head_diameter": 13.0, "bolt.head_height": 5.3 },
+        "M10": { "bolt.diameter": 10.0, "bolt.head_diameter": 16.0, "bolt.head_height": 6.4 },
+        "M12": { "bolt.diameter": 12.0, "bolt.head_diameter": 18.0, "bolt.head_height": 7.5 },
+        "M16": { "bolt.diameter": 16.0, "bolt.head_diameter": 24.0, "bolt.head_height": 10.0 },
+        "M20": { "bolt.diameter": 20.0, "bolt.head_diameter": 30.0, "bolt.head_height": 12.5 }
+      },
+      "free_params": ["bolt.length"]
+    }
+  }
+}

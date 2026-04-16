@@ -73,7 +73,7 @@ def get_template_example(template: str) -> dict:
 
 @mcp.tool()
 def validate_params(template: str, params: dict) -> dict:
-    """Validate parameters against the template's JSON Schema and semantic rules without generating any output. Use this as a dry-run safety check before calling generate_part."""
+    """Validate parameters against the template's JSON Schema, semantic rules, and constraints. Returns warnings for canonical value deviations."""
     try:
         reg = _get_registry()
         schema_path = reg.resolve_path(template) / "schema.json"
@@ -82,7 +82,36 @@ def validate_params(template: str, params: dict) -> dict:
         schema = json.loads(schema_path.read_text(encoding="utf-8"))
         _validate_params(params, schema)
         validate_semantics(template=template, params=params)
-        return {"valid": True}
+
+        # Canonical constraint warnings
+        warnings = []
+        constraints_path = reg.resolve_path(template) / "constraints.json"
+        if constraints_path.exists():
+            constraints = json.loads(constraints_path.read_text(encoding="utf-8"))
+            for dotkey, canon in constraints.get("canonical", {}).items():
+                if not isinstance(canon, dict) or dotkey.startswith("_"):
+                    continue
+                expected = canon.get("value")
+                if expected is None:
+                    continue
+                # Navigate params by dotkey
+                parts = dotkey.split(".")
+                val = params
+                for p in parts:
+                    if isinstance(val, dict):
+                        val = val.get(p)
+                    else:
+                        val = None
+                        break
+                if val is not None and val != expected:
+                    warnings.append(
+                        f"Canonical value deviation: {dotkey}={val} (expected {expected}, source: {canon.get('source', 'spec')})"
+                    )
+
+        result = {"valid": True}
+        if warnings:
+            result["warnings"] = warnings
+        return result
     except RuntimeError as exc:
         return {"valid": False, "error": str(exc)}
 
@@ -121,11 +150,21 @@ def verify_template(name: str) -> dict:
 
 
 @mcp.tool()
+def get_template_constraints(template: str) -> dict:
+    """Return the constraints for a template: canonical values, variant presets, linked parameter sets, and configurable params. Use this to understand which parameters are fixed by specification, which have standard presets, and which are freely adjustable."""
+    reg = _get_registry()
+    constraints_path = reg.resolve_path(template) / "constraints.json"
+    if not constraints_path.exists():
+        return {"error": f"No constraints found for template: {template}"}
+    return json.loads(constraints_path.read_text(encoding="utf-8"))
+
+
+@mcp.tool()
 def find_template(purpose: str) -> dict:
-    """Search for templates matching a given purpose description. Returns results ranked by simplicity, preferring templates with fewer parameters."""
+    """Search for templates by name, purpose, tags, or constraint presets (e.g. 'M5 bolt', 'soccer ball', 'LEGO 2x4'). Returns results ranked by simplicity with resolved parameters when a preset matches."""
     try:
         reg = _get_registry()
-        results = reg.find_simpler(purpose)
+        results = reg.find_with_constraints(purpose)
         return {"ok": True, "results": results}
     except RuntimeError as exc:
         return {"ok": False, "error": str(exc)}

@@ -1,0 +1,15 @@
+{
+  "units": "mm",
+  "material_hint": "stone",
+  "minecraft_block": {
+    "size": 50.0,
+    "edge_chamfer": 1.0,
+    "groove_depth": 1.5,
+    "groove_width": 2.0
+  },
+  "output": {
+    "step": true,
+    "stl": true,
+    "tolerance": 0.1
+  }
+}

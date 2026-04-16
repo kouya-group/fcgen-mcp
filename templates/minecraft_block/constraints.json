@@ -1,0 +1,12 @@
+{
+  "canonical": {
+    "minecraft_block.size": {
+      "value": 1000.0,
+      "unit": "mm",
+      "source": "Minecraft game specification (1 block = 1 meter)",
+      "allow_override": true,
+      "override_requires": "user_confirmation"
+    }
+  },
+  "configurable": ["minecraft_block.edge_chamfer", "minecraft_block.groove_depth", "minecraft_block.groove_width"]
+}
