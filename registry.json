@@ -44,7 +44,7 @@
     "bolt": {
       "status": "verified",
       "source": "generated",
-      "content_hash": "6e892b3c795264bded9214ad7cb17f46e423b46302007cb08ddcbf6f2e4464ba",
+      "content_hash": "1798e57b6bee490b7f7a5139497942a92fb1db39e39fe0004d5a14d4243c7a1a",
       "param_count": 4,
       "purpose": "Simple cylindrical bolt with head",
       "tags": [

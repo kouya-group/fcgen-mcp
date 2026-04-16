@@ -100,7 +100,7 @@ def list_candidates() -> dict:
 
 @mcp.tool()
 def propose_template(name: str, purpose: str, tags: list[str] | None = None, source: str = "generated") -> dict:
-    """Register a new template as a candidate. The template files (generate.py, schema.json, etc.) must already exist under templates_candidate/{name}/. Provide a purpose description and optional tags."""
+    """Register a new template as a candidate. The template files (generator.py, schema.json, freecad_generate.py, etc.) must already exist under templates_candidate/{name}/. Provide a purpose description and optional tags."""
     try:
         reg = _get_registry()
         entry = reg.add_candidate(name=name, source=source, purpose=purpose, tags=tags)

@@ -191,10 +191,22 @@ class Registry:
     # -- 検索 -----------------------------------------------------------------
 
     def find_simpler(self, purpose: str) -> list[dict]:
-        """purpose に部分一致するテンプレートを param_count 昇順で返す."""
+        """purpose/name/tags に部分一致するテンプレートを param_count 昇順で返す.
+
+        クエリを空白で分割し、全トークンが name・purpose・tags のいずれかに
+        含まれる AND 検索を行う。
+        """
+        tokens = purpose.lower().split()
+        if not tokens:
+            return []
         results = []
         for name, entry in self._data.get("templates", {}).items():
-            if purpose.lower() in (entry.get("purpose") or "").lower():
+            searchable = " ".join([
+                name.lower(),
+                (entry.get("purpose") or "").lower(),
+                " ".join(t.lower() for t in entry.get("tags", [])),
+            ])
+            if all(tok in searchable for tok in tokens):
                 results.append({"name": name, **entry})
         results.sort(key=lambda x: x.get("param_count", 0))
         return results
