@@ -60,10 +60,13 @@ def run_assembly(spec: dict, out_dir: Path, dry_run: bool = False) -> dict:
         f"part_count={len(parts)}",
     ]
 
+    interference = None
+
     if not dry_run:
         manifest = {
             "parts": [
                 {
+                    "id": r["id"],
                     "step_path": r["outputs"]["step"],
                     "position": r["placement"]["position"],
                     "rotation": r["placement"]["rotation"],
@@ -84,12 +87,24 @@ def run_assembly(spec: dict, out_dir: Path, dry_run: bool = False) -> dict:
             output_flags=spec.get("output", {"step": True, "stl": True}),
         )
         log_lines.append("assembly=ok")
+
+        # 干渉レポートの読み込み
+        interference_path = out_dir / "interference_report.json"
+        if interference_path.exists():
+            interference = json.loads(interference_path.read_text(encoding="utf-8"))
+            count = interference.get("pair_count", 0)
+            log_lines.append(f"interference_pairs={count}")
+            if count > 0:
+                for pair in interference["pairs"]:
+                    log_lines.append(
+                        f"  interference: {pair['part_a']} <-> {pair['part_b']} = {pair['volume_mm3']} mm^3"
+                    )
     else:
         log_lines.append("assembly=skipped")
 
     write_log(log_path, log_lines)
 
-    return {
+    result = {
         "mode": "assembly",
         "artifact_hash": artifact_hash,
         "parts": part_results,
@@ -99,3 +114,8 @@ def run_assembly(spec: dict, out_dir: Path, dry_run: bool = False) -> dict:
             "log": str(log_path),
         },
     }
+
+    if interference is not None:
+        result["interference"] = interference
+
+    return result

@@ -100,6 +100,27 @@ An assembly combines multiple parts with spatial placement.
 2. Validate each part's params individually with `validate_params`
 3. Build the assembly spec JSON with unique `id` per part
 4. Call `generate_assembly(spec, out_name)`
+5. Check the `interference` field in the result for part collisions
+
+### Interference Check
+
+`generate_assembly` automatically checks all part pairs for physical overlap using FreeCAD Boolean intersection. The result includes:
+
+```json
+{
+  "interference": {
+    "checked": true,
+    "pair_count": 1,
+    "pairs": [
+      {"part_a": "top", "part_b": "leg_1", "volume_mm3": 88743.363}
+    ]
+  }
+}
+```
+
+- `pair_count > 0` means parts are colliding — fix placement before using the output
+- A detailed report is also saved as `interference_report.json` in the output directory
+- Volumes below 0.001 mm^3 are ignored as numerical noise
 
 ### Desk Assembly Pattern
 
