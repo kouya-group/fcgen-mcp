@@ -4,7 +4,7 @@
     "adapter_plate": {
       "status": "verified",
       "source": "builtin",
-      "content_hash": "b7b55adf69b1ea3a1caea4b1fb254bd0388039608a039a57072a221033e2ec4b",
+      "content_hash": "844fd820dfd74350baa885a8b26c3c2443d14edb9cd8a61f1bb846a5e2b4fa48",
       "param_count": 12,
       "purpose": "Flat plate with two bolt circle patterns",
       "tags": [
@@ -18,7 +18,7 @@
     "bracket": {
       "status": "verified",
       "source": "builtin",
-      "content_hash": "121be0dcfaebdd52dcad884b8c9b361d1fbe1cf8ee3ddfe20cb03e8f733995ac",
+      "content_hash": "56337e8a8be0f5c7b872d4c129d5c77573c4ccb1de83e039b94ef296207a0133",
       "param_count": 10,
       "purpose": "L-bracket with configurable holes",
       "tags": [
@@ -31,7 +31,7 @@
     "enclosure": {
       "status": "verified",
       "source": "builtin",
-      "content_hash": "300a6c26c5199d5e3941a69f0bc5c2f05e8439d33c118897dfc4a4f842898a20",
+      "content_hash": "0c9c9011846a85c4b0b1642e9eb9181ce09b9795a0e7deda3f5d41589faefdcc",
       "param_count": 10,
       "purpose": "Rectangular box with lid and screw bosses",
       "tags": [
@@ -44,7 +44,7 @@
     "bolt": {
       "status": "verified",
       "source": "generated",
-      "content_hash": "1798e57b6bee490b7f7a5139497942a92fb1db39e39fe0004d5a14d4243c7a1a",
+      "content_hash": "bc5dec1dd0d2ab4afa56c19bc24cdce55c1b2963a888e3c3d3906e4e7c1c4c04",
       "param_count": 4,
       "purpose": "Simple cylindrical bolt with head",
       "tags": [
@@ -57,7 +57,7 @@
     "table_top": {
       "status": "verified",
       "source": "builtin",
-      "content_hash": "b2cfef56ac3cbf62a3dd4a9280e830d4461a00c16506906796ad2c9d3d773465",
+      "content_hash": "cd21663614580bf49ae9be0b694d16d2c356a0e68ae6050e0ea24b2e0f1e4769",
       "param_count": 4,
       "purpose": "Flat table top plate with optional edge fillet",
       "tags": [
@@ -70,7 +70,7 @@
     "simple_leg": {
       "status": "verified",
       "source": "builtin",
-      "content_hash": "8f5f6c3ee4b47e1c2ee2872144b53caf89963ea59b887ea1e8ebc0152abf286f",
+      "content_hash": "86dffefc9ab0d0b737cb7a1d5e9a135f18c9f84de78bca13ee5f13fe9e1056d3",
       "param_count": 5,
       "purpose": "Rectangular leg with chamfer and mounting hole",
       "tags": [
@@ -83,7 +83,7 @@
     "sphere": {
       "status": "verified",
       "source": "generated",
-      "content_hash": "e10581fd5b8a9087fb22f58244690d7ec52e7981720f8fb7d7c22056adeb8f49",
+      "content_hash": "ef9a1a47f74dccf704eeda42874b0d55d5fc15287f0f59f398376cf02a9b464e",
       "param_count": 1,
       "purpose": "Solid sphere with configurable radius",
       "tags": [
@@ -96,7 +96,7 @@
     "cup": {
       "status": "verified",
       "source": "generated",
-      "content_hash": "29be0bb1fe7b7de30492690726545b25162d72d506ce81dec6d1f01df49dcc3b",
+      "content_hash": "116490de51139866c779cd7a98b77268d7a54cf54a369ea675988ce92ffc0030",
       "param_count": 7,
       "purpose": "Cylindrical cup with handle, hollow interior",
       "tags": [
@@ -109,7 +109,7 @@
     "lego_brick": {
       "status": "verified",
       "source": "generated",
-      "content_hash": "bb9f4cb6f9e1cc08af9be5b17ae25000b39743989e1cd6ddcbdc21bc1b7558c4",
+      "content_hash": "942013cc8c476c34d9291579baaae4d6f810fefbcb1a4f791d513702622805f2",
       "param_count": 3,
       "purpose": "LEGO-compatible brick with studs",
       "tags": [
@@ -122,7 +122,7 @@
     "minecraft_block": {
       "status": "verified",
       "source": "generated",
-      "content_hash": "f492d7ecf2e194a4b1fb81c2cd48b7fd633dcebee4cd1f502d29c2fc7a116a1d",
+      "content_hash": "2aeb8bb8cbfa7748733b4ea24498d345cf353cd9f67367b949e5555ea98dfa4c",
       "param_count": 4,
       "purpose": "Minecraft-style cube with edge chamfers and face grooves",
       "tags": [

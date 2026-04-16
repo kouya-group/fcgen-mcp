@@ -157,13 +157,13 @@ Call `generate_part(template, params, out_name)` to produce STEP/STL files.
 | `bracket` | L-bracket with holes | thickness, leg_a, leg_b, width, holes |
 | `adapter_plate` | Flat plate with bolt circle patterns | size, thickness, pattern_a, pattern_b |
 | `enclosure` | Box with lid and screw bosses | width, depth, height, wall, corner_radius |
-| `bolt` | Cylindrical bolt with head | diameter, length, head_d, head_h (linked: M3-M20) |
+| `bolt` | Cylindrical bolt with head | diameter, length, head_diameter, head_height (linked: M3-M20) |
 | `table_top` | Flat plate with edge fillet | width, depth, thickness, edge_fillet |
 | `simple_leg` | Rectangular leg with chamfer | width, depth, height, chamfer, hole_diameter |
 | `sphere` | Solid sphere | radius (variants: soccer/tennis/baseball/golf/etc.) |
-| `cup` | Hollow cup with handle | outer_d, height, wall, bottom (variants: espresso/mug/large) |
+| `cup` | Hollow cup with handle | outer_diameter, height, wall_thickness, bottom_thickness (variants: espresso/mug/large) |
 | `lego_brick` | LEGO-compatible brick | studs_x, studs_y, height_plates (canonical: pitch=8mm) |
-| `minecraft_block` | Minecraft-style cube | size (canonical: 1000mm), chamfer, grooves |
+| `minecraft_block` | Minecraft-style cube | size (canonical: 1000mm), edge_chamfer, groove_depth, groove_width |
 
 ## Parameter Structure Convention
 

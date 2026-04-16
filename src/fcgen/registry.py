@@ -70,7 +70,7 @@ class Registry:
     @staticmethod
     def compute_content_hash(template_dir: Path) -> str:
         """schema.json, generator.py, freecad_generate.py の SHA-256 を算出する."""
-        canonical_files = sorted(["freecad_generate.py", "generator.py", "schema.json"])
+        canonical_files = sorted(["constraints.json", "freecad_generate.py", "generator.py", "schema.json"])
         h = hashlib.sha256()
         for fname in canonical_files:
             fpath = template_dir / fname
