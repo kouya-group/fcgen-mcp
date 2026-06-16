@@ -430,11 +430,11 @@ Outputs object:
     "artifact_hash": "e6e0dc054496065a0bdb530d2a1204e165cd86ed9b1da75701a18dec6e98fd01",
     "freecad_version": "1.0.0",
     "outputs": {
-      "step": "C:\\Users\\chibi\\Project\\fcgen\\output\\bolt_m5\\model.step",
-      "stl": "C:\\Users\\chibi\\Project\\fcgen\\output\\bolt_m5\\model.stl",
-      "report_json": "C:\\Users\\chibi\\Project\\fcgen\\output\\bolt_m5\\report.json",
-      "report_md": "C:\\Users\\chibi\\Project\\fcgen\\output\\bolt_m5\\report.md",
-      "log": "C:\\Users\\chibi\\Project\\fcgen\\output\\bolt_m5\\log.txt"
+      "step": "./output/bolt_m5/model.step",
+      "stl": "./output/bolt_m5/model.stl",
+      "report_json": "./output/bolt_m5/report.json",
+      "report_md": "./output/bolt_m5/report.md",
+      "log": "./output/bolt_m5/log.txt"
     }
   }
 }
